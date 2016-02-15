@@ -61,7 +61,7 @@ class FT_MP {
             <?php
             foreach ( $cart_items as $product ){
             ?>
-            mixpanel.people.increment("Purchase Number", <?php echo intval( $product['quantity'] );  ?> );
+            // mixpanel.people.increment("Purchase Number", <?php echo intval( $product['quantity'] );  ?> );
             mixpanel.people.append(
                 {
                     "Product Name": <?php echo json_encode( $product["name"] ); ?>,
@@ -74,7 +74,7 @@ class FT_MP {
         <?php
     }
 
-    
+
 }
 
 new FT_MP();
