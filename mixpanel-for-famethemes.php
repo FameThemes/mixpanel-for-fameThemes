@@ -52,35 +52,20 @@ class FT_MP {
         <script type="text/javascript">
 
             mixpanel.identify( <?php echo $session['user_info']['id'] ?> );
+            mixpanel.people.track_charge( <?php echo floatval( $price ); ?> );
+            mixpanel.people.set( {
+                '$first_name' : '<?php echo esc_attr( $session['user_info']['first_name'] ); ?>',
+                '$last_name'  : '<?php echo esc_attr( $session['user_info']['last_name'] ); ?>',
+                '$email'      : "<?php echo esc_attr( $session['user_info']['email'] ) ?>",
+            });
             <?php
             foreach ( $cart_items as $product ){
-            /*
-            // mixpanel.people.increment("Purchase Number", <?php echo intval( $product['quantity'] );  ?> );
-             mixpanel.people.append(
-             {
-             "Product Name": <?php echo json_encode( $product["name"] ); ?>,
-             }
-             );
-            // mixpanel.track("Purchase", {"Amount": <?php echo floatval( $product["item_price"] ) ?>, "Product Name":<?php echo json_encode( $product["name"] ); ?> });
-             */
             ?>
-            mixpanel.people.track_charge( <?php echo floatval( $product["price"] ); ?> );
-            <?php /*
-           // mixpanel.people.append('Product Name', <?php echo json_encode( $product["name"] ); ?>);
-            mixpanel.people.increment({
-                <?php echo json_encode( $product["name"] ); ?>: <?php echo intval( $product['quantity'] );  ?>,
-            });
-            mixpanel.track(
-                "Purchase", {
-                    "Amount":<?php echo floatval( $product["item_price"] ) ?>,
-                    "Product Name": <?php echo json_encode( $product["name"] ); ?>
-                }
-            );
-            mixpanel.track( <?php echo json_encode( $product["name"] ); ?> , { Quantity: <?php echo floatval( $product["quantity"] ) ?>});
-
+            mixpanel.track( 'Purchase', {"Amount": <?php echo floatval( $product["item_price"] ) ?>, "Product":<?php echo json_encode( $product["name"] ); ?> });
+            mixpanel.people.union( {
+                Products: '<?php echo esc_attr( $product["name"] ); ?>'
+            } );
             <?php
-             */
-
              }
             ?>
         </script>
