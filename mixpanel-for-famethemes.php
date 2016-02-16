@@ -52,7 +52,6 @@ class FT_MP {
         <script type="text/javascript">
 
             mixpanel.identify( <?php echo $session['user_info']['id'] ?> );
-            mixpanel.people.track_charge( <?php echo floatval( $price ); ?> );
             mixpanel.people.set( {
                 '$first_name' : '<?php echo esc_attr( $session['user_info']['first_name'] ); ?>',
                 '$last_name'  : '<?php echo esc_attr( $session['user_info']['last_name'] ); ?>',
@@ -61,13 +60,9 @@ class FT_MP {
             <?php
             foreach ( $cart_items as $product ){
             ?>
+            mixpanel.people.track_charge( <?php echo floatval( $product["price"] ); ?>, { "Product Name": '<?php echo esc_attr( $product["name"] ); ?>' } );
             mixpanel.track( 'Purchase', {"Amount": <?php echo floatval( $product["item_price"] ) ?>, "Product Name":<?php echo json_encode( $product["name"] ); ?> } );
-            mixpanel.people.append( 'Products', '<?php echo esc_attr( $product["name"] ); ?>' );
-            /*
-            mixpanel.people.union( {
-                Products: '<?php echo esc_attr( $product["name"] ); ?>'
-            } );
-            */
+            mixpanel.people.append( 'Product Name', '<?php echo esc_attr( $product["name"] ); ?>' );
             <?php
              }
             ?>
