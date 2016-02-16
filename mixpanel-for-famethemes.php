@@ -33,7 +33,7 @@ class FT_MP {
         }
         $sent =  EDD()->session->get( 'ft_mp_sent_'.$edd_receipt_args['id'] );
         if ( $sent ) {
-           // return ;
+           return ;
         }
        // global $edd_receipt_args;
         $success_page = edd_get_option( 'success_page' ) ? is_page( edd_get_option( 'success_page' ) ) : false;
