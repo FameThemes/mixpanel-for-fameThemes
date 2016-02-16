@@ -61,7 +61,7 @@ class FT_MP {
             foreach ( $cart_items as $product ){
             ?>
             mixpanel.people.track_charge( <?php echo floatval( $product["price"] ); ?>, { "Product Name": '<?php echo esc_attr( $product["name"] ); ?>' } );
-            mixpanel.track( 'Purchase', {"Amount": <?php echo floatval( $product["item_price"] ) ?>, "Product Name":<?php echo json_encode( $product["name"] ); ?> } );
+            mixpanel.track( 'Purchase', {"Amount": <?php echo floatval( $product["price"] ) ?>, "Product Name":<?php echo json_encode( $product["name"] ); ?> } );
             mixpanel.people.append( 'Product Name', '<?php echo esc_attr( $product["name"] ); ?>' );
             <?php
              }
