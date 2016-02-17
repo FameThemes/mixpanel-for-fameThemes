@@ -33,6 +33,13 @@ class FT_MP {
         if ( $sent ) {
             $is_send = false;
         }
+
+        $price = $session['price'];
+        if ( floatval( $price ) <= 0 ) {
+            $is_send = false;
+        }
+
+
         ?>
         <!-- start Mixpanel -->
         <script type="text/javascript">
@@ -84,12 +91,8 @@ class FT_MP {
         </script>
         <!-- end Mixpanel -->
         <?php
-        if ( ! $edd_receipt_args['id']  ) {
+        if ( ! $is_send  ) {
             return ;
-        }
-        $sent =  EDD()->session->get( 'ft_mp_sent_'.$edd_receipt_args['id'] );
-        if ( $sent ) {
-           return ;
         }
        // global $edd_receipt_args;
         $success_page = edd_get_option( 'success_page' ) ? is_page( edd_get_option( 'success_page' ) ) : false;
@@ -97,7 +100,6 @@ class FT_MP {
             return;
         }
 
-        $price = $session['price'];
         $cart_items = $session['cart_details'];
 
         if ( isset( $edd_receipt_args['id'] ) ) {
