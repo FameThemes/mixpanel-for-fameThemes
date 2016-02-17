@@ -50,10 +50,10 @@ class FT_MP {
                 loaded: function() {
                     <?php if ( intval( $session['user_info']['id'] ) > 0 && $is_send ) { ?>
 
-                    utm_source   = mixpanel.get_property("utm_source")  ;
-                    utm_medium   = mixpanel.get_property("utm_medium")  ;
-                    utm_campaign = mixpanel.get_property("utm_campaign");
-                    utm_content  = mixpanel.get_property("utm_content") ;
+                    var utm_source   = mixpanel.get_property("utm_source")  ;
+                    var utm_medium   = mixpanel.get_property("utm_medium")  ;
+                    var utm_campaign = mixpanel.get_property("utm_campaign");
+                    var utm_content  = mixpanel.get_property("utm_content") ;
                     mixpanel.identify( <?php echo intval( $session['user_info']['id'] ); ?> );
 
                     if ( typeof utm_source !== "undefined" ) {
