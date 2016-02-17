@@ -39,7 +39,16 @@ class FT_MP {
             $is_send = false;
         }
 
+        // global $edd_receipt_args;
+        $success_page = edd_get_option( 'success_page' ) ? is_page( edd_get_option( 'success_page' ) ) : false;
+        if ( ! $success_page || ! edd_is_success_page() ){
+            $is_send = false;
+        }
 
+        if ( $session['user_info']['id'] <= 0 ) {
+            $is_send = false;
+        }
+        
         ?>
         <!-- start Mixpanel -->
         <script type="text/javascript">
@@ -48,12 +57,13 @@ class FT_MP {
 
             mixpanel.init("<?php echo FT_MP_API_KEY; ?>", {
                 loaded: function() {
-                    <?php if ( intval( $session['user_info']['id'] ) > 0 && $is_send ) { ?>
+                    <?php if ( $is_send ) { ?>
 
                     var utm_source   = mixpanel.get_property("utm_source")  ;
                     var utm_medium   = mixpanel.get_property("utm_medium")  ;
                     var utm_campaign = mixpanel.get_property("utm_campaign");
                     var utm_content  = mixpanel.get_property("utm_content") ;
+
                     mixpanel.identify( <?php echo intval( $session['user_info']['id'] ); ?> );
 
                     if ( typeof utm_source !== "undefined" ) {
@@ -87,11 +97,6 @@ class FT_MP {
         <?php
         if ( ! $is_send  ) {
             return ;
-        }
-       // global $edd_receipt_args;
-        $success_page = edd_get_option( 'success_page' ) ? is_page( edd_get_option( 'success_page' ) ) : false;
-        if ( ! $success_page || ! edd_is_success_page() ){
-            return;
         }
 
         $cart_items = $session['cart_details'];
