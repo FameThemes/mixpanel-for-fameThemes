@@ -43,48 +43,42 @@ class FT_MP {
         ?>
         <!-- start Mixpanel -->
         <script type="text/javascript">
-            var utm_source, utm_medium, utm_campaign, utm_content;
-            var current_user_id = <?php echo intval( $session['user_info']['id'] ) ?>;
-            var is_send = <?php echo $is_send ? 'true': 'false'; ?>;
-
             (function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
                 for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);
 
             mixpanel.init("<?php echo FT_MP_API_KEY; ?>", {
                 loaded: function() {
+                    <?php if ( intval( $session['user_info']['id'] ) > 0 && $is_send ) { ?>
 
-                    if ( current_user_id > 0 && is_send ) {
-                        utm_source   = mixpanel.get_property("utm_source")  ;
-                        utm_medium   = mixpanel.get_property("utm_medium")  ;
-                        utm_campaign = mixpanel.get_property("utm_campaign");
-                        utm_content  = mixpanel.get_property("utm_content") ;
-                        mixpanel.identify( current_user_id );
+                    utm_source   = mixpanel.get_property("utm_source")  ;
+                    utm_medium   = mixpanel.get_property("utm_medium")  ;
+                    utm_campaign = mixpanel.get_property("utm_campaign");
+                    utm_content  = mixpanel.get_property("utm_content") ;
+                    mixpanel.identify( current_user_id );
 
-                        if ( typeof utm_source !== "undefined" ) {
-                            mixpanel.people.set( 'utm_source', utm_source );
-                            mixpanel.people.append( 'utm_source', utm_source );
-                        }
-
-                        if ( typeof utm_medium !== "undefined" ) {
-                            mixpanel.people.set( 'utm_medium', utm_medium );
-                            mixpanel.people.append( 'utm_medium', utm_medium );
-                        }
-
-                        if ( typeof utm_campaign !== "undefined" ) {
-                            mixpanel.people.set( 'utm_campaign', utm_campaign );
-                            mixpanel.people.append( 'utm_campaign', utm_campaign );
-                        }
-
-                        if ( typeof utm_content !== "undefined" ) {
-                            mixpanel.people.set( 'utm_content', utm_content );
-                            mixpanel.people.append( 'utm_content', utm_content );
-                        }
-
+                    if ( typeof utm_source !== "undefined" ) {
+                        mixpanel.people.set( 'utm_source', utm_source );
+                        mixpanel.people.append( 'utm_source', utm_source );
                     }
 
+                    if ( typeof utm_medium !== "undefined" ) {
+                        mixpanel.people.set( 'utm_medium', utm_medium );
+                        mixpanel.people.append( 'utm_medium', utm_medium );
+                    }
+
+                    if ( typeof utm_campaign !== "undefined" ) {
+                        mixpanel.people.set( 'utm_campaign', utm_campaign );
+                        mixpanel.people.append( 'utm_campaign', utm_campaign );
+                    }
+
+                    if ( typeof utm_content !== "undefined" ) {
+                        mixpanel.people.set( 'utm_content', utm_content );
+                        mixpanel.people.append( 'utm_content', utm_content );
+                    }
+                    <?php } ?>
+
                 }
-                }
-            );
+            } );
 
 
 
