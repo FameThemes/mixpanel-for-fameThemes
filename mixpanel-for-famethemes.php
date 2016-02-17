@@ -50,7 +50,6 @@ class FT_MP {
         //  $session['user_info']['id']
         ?>
         <script type="text/javascript">
-
             mixpanel.identify( <?php echo $session['user_info']['id'] ?> );
             mixpanel.people.set( {
                 '$first_name' : '<?php echo esc_attr( $session['user_info']['first_name'] ); ?>',
@@ -62,7 +61,10 @@ class FT_MP {
             ?>
             mixpanel.people.track_charge( <?php echo floatval( $product["price"] ); ?>, { "Product Name": '<?php echo esc_attr( $product["name"] ); ?>' } );
             mixpanel.track( 'Purchase', {"Amount": <?php echo floatval( $product["price"] ) ?>, "Product Name":<?php echo json_encode( $product["name"] ); ?> } );
+            //people.append and people.union both add strings to an array property that is not displayed correctly
             mixpanel.people.append( 'Product Name', '<?php echo esc_attr( $product["name"] ); ?>' );
+            //instead, you can use people.set, and add to the profile the latest product name purchased
+            mixpanel.people.set({ 'Latest Product Purchased': '<?php echo esc_attr( $product["name"] ); ?>'});
             <?php
              }
             ?>
