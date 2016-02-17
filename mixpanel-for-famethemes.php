@@ -54,7 +54,7 @@ class FT_MP {
                     utm_medium   = mixpanel.get_property("utm_medium")  ;
                     utm_campaign = mixpanel.get_property("utm_campaign");
                     utm_content  = mixpanel.get_property("utm_content") ;
-                    mixpanel.identify( current_user_id );
+                    mixpanel.identify( <?php echo intval( $session['user_info']['id'] ); ?> );
 
                     if ( typeof utm_source !== "undefined" ) {
                         mixpanel.people.set( 'utm_source', utm_source );
