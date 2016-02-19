@@ -94,6 +94,13 @@ class FT_MP {
         <script type="text/javascript">
             mixpanel.track_links("a.pricing_button_free", "Get OnePress free");
             <?php
+             if ( is_single( 8536 ) ) {
+             ?>
+                mixpanel.track("Page View OnePress free");
+             <?php
+             }
+             ?>
+            <?php
             if ( $is_send ) {
 
             $cart_items = $session['cart_details'];
