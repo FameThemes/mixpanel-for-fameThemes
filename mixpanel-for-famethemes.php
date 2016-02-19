@@ -10,7 +10,7 @@
  */
 
 define( 'FT_MP_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
-define( 'FT_MP_API_KEY', 'baffcc730f0885fb6e682a0d629b2fa0' );
+define( 'FT_MP_API_KEY', '6dd7f2f8a6137a1302e8bb763671d27e' );
 
 
 class FT_MP {
@@ -48,7 +48,7 @@ class FT_MP {
         if ( $session['user_info']['id'] <= 0 ) {
             $is_send = false;
         }
-        
+
         ?>
         <!-- start Mixpanel -->
         <script type="text/javascript">
@@ -89,24 +89,20 @@ class FT_MP {
 
                 }
             } );
-
-
-
         </script>
         <!-- end Mixpanel -->
-        <?php
-        if ( ! $is_send  ) {
-            return ;
-        }
-
-        $cart_items = $session['cart_details'];
-
-        if ( isset( $edd_receipt_args['id'] ) ) {
-            EDD()->session->set( 'ft_mp_sent_'.$edd_receipt_args['id'], true );
-        }
-        //  $session['user_info']['id']
-        ?>
         <script type="text/javascript">
+            mixpanel.track_links("a.pricing_button_free", "Get OnePress free");
+            <?php
+            if ( $is_send ) {
+
+            $cart_items = $session['cart_details'];
+
+            if ( isset( $edd_receipt_args['id'] ) ) {
+                EDD()->session->set( 'ft_mp_sent_'.$edd_receipt_args['id'], true );
+            }
+
+            ?>
             mixpanel.identify( <?php echo intval( $session['user_info']['id'] ) ?> );
             mixpanel.people.set( {
                 '$first_name' : '<?php echo esc_attr( $session['user_info']['first_name'] ); ?>',
@@ -127,6 +123,7 @@ class FT_MP {
             <?php
              }
             ?>
+            <?php } ?>
         </script>
         <?php
     }
